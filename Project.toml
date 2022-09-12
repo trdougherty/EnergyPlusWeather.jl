@@ -1,0 +1,13 @@
+name = "EnergyPlusWeather"
+uuid = "23a99d2b-0ee3-4e1a-b4bc-94a651e492a4"
+authors = ["Thomas Dougherty"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
