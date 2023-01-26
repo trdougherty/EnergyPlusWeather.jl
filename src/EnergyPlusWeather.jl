@@ -92,7 +92,7 @@ end
 
 function read(filename::String; subsetcols=true)::DataFrame
     epw_dataframe::DataFrame = CSV.read(filename, skipto=9, header=_columnnames, DataFrames.DataFrame)
-    _strip_missing_epw!(epw_dataframe)
+    _strip_missing!(epw_dataframe)
 
     aggregation_terms = subsetcols ? 
         names(select(epw_dataframe, _col_ofinterest), Union{Missing, Real}) : 
