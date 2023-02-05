@@ -98,20 +98,21 @@ function read(filename::String; subsetcols=true)::DataFrame
         names(select(epw_dataframe, _col_ofinterest), Union{Missing, Real}) : 
         names(epw_dataframe, Union{Missing, Real})
 
-    epw_average = DataFrames.combine(
-        DataFrames.groupby(epw_dataframe, ["Month","Day","Hour"]),
-        [aggregation_terms...] .=> mean,
-        renamecols=false
-    )
+    # epw_average = DataFrames.combine(
+    #     DataFrames.groupby(epw_dataframe, ["Month","Day","Hour"]),
+    #     [aggregation_terms...] .=> [maximum, median, minimum],
+    #     renamecols=true
+    # )
 
-    epw_average[!, "Date"] = Dates.DateTime.(
+    epw_dataframe[!, "Date"] = Dates.DateTime.(
         # Dates.Year.(epw_dataframe.Year),
-        Dates.Month.(epw_average.Month),
-        Dates.Day.(epw_average.Day),
-        Dates.Hour.(epw_dataframe.Hour)
+        Dates.Month.(epw_dataframe.Month),
+        Dates.Day.(epw_dataframe.Day),
+        Dates.Hour.(epw_dataframe.Hour),
+		Dates.Minute.(epw_dataframe.Minute)
     )
-    
-    DataFrames.select!(epw_average, Not([:Month, :Day, :Hour]))
+	    
+    DataFrames.select!(epw_dataframe, Not([:Month, :Day, :Hour, :Minute]))
 end
 
 end
